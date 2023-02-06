@@ -6,7 +6,7 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 20:34:03 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/01/28 22:46:37 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/02/06 22:09:05 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,18 +68,8 @@ for collectables,we will change the value of can_exit for 1.*/
 /*If can_exit = 1 and the position that we are is exit, we will call the 
 funtion win_game.*/
 /*Then we will put the player in that position.*/
-void	move_player(t_game *game, char move)
+void	movement(t_game *game, char move)
 {
-	if (check_next_positions(game, move, WALL) == 1
-		|| (check_next_positions(game, move, EXIT) == 1
-			&& game->map.can_exit == 0))
-		return ;
-	game->moves++;
-	ft_printf("Moves: %d\n", game->moves);
-	count_collectables_catches(game, move);
-	if (game->collect == game->map.collect)
-		game->map.can_exit = 1;
-	game->map.map[game->map.pp.y][game->map.pp.x] = EMPTY;
 	if (move == 'd')
 		game->map.pp.x++;
 	else if (move == 'a')
@@ -88,6 +78,28 @@ void	move_player(t_game *game, char move)
 		game->map.pp.y++;
 	else if (move == 'w')
 		game->map.pp.y--;
+}
+
+void	move_player(t_game *game, char move)
+{
+	static int	is_exit = 0;
+
+	if (check_next_positions(game, move, WALL) == 1)
+		return ;
+	if ((check_next_positions(game, move, EXIT) == 1 && game->map.can_exit == 0))
+		is_exit = 1;
+	game->moves++;
+	ft_printf("Moves: %d\n", game->moves);
+	count_collectables_catches(game, move);
+	if (game->collect == game->map.collect)
+		game->map.can_exit = 1;
+	game->map.map[game->map.pp.y][game->map.pp.x] = EMPTY;
+	if (is_exit == 1)
+	{
+		game->map.map[game->map.pp.y][game->map.pp.x] = EXIT;
+		is_exit = 0;
+	}
+	movement(game, move);
 	if (game->map.can_exit == 1
 		&& game->map.map[game->map.pp.y][game->map.pp.x] == EXIT)
 		win_game(game);

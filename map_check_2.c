@@ -6,7 +6,7 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 21:09:31 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/01/28 22:45:20 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/02/06 22:19:34 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,9 @@ int	line_length_equal(t_mapdata mapdata, char *file)
 	int	column_count;
 
 	line_count = count_lines_map(file);
+	ft_printf("linha: %i\n", line_count);
 	column_count = count_column_map(mapdata);
+	ft_printf("%i", column_count);
 	i = 0;
 	while (i < line_count)
 	{
@@ -108,7 +110,7 @@ int	line_length_equal(t_mapdata mapdata, char *file)
 				break ;
 			else if (mapdata.map[i][j + 1] == '\0' && j != (column_count - 1))
 			{
-				matrix_delete(mapdata.map);
+				//matrix_delete(mapdata.map);
 				return (0);
 			}
 			j++;
