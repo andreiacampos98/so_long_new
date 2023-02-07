@@ -6,7 +6,7 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 18:23:22 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/02/06 21:09:52 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/02/07 18:28:53 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int	valid_map(char *file, t_mapdata mapdata)
 	if (!line_length_equal(mapdata, file))
 	{
 		matrix_delete((mapdata).map);
+		handle_errors("The map isn't rectangular.");
 		return (0);
 	}
 	if (!has_valid_path(&mapdata))

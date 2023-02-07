@@ -6,7 +6,7 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 19:18:15 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/02/06 21:08:50 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/02/07 18:16:07 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,26 +18,23 @@
 int	count_lines_map(char *file)
 {
 	int			fd;
-	int			readcount;
-	t_point		size;
-	char		c;
+	int			lines;
+	char		*tmp;
 
-	size.y = 0;
+	lines = 0;
 	fd = open(file, O_RDONLY);
 	if (!fd)
 		return (-1);
 	while (1)
 	{
-		readcount = read(fd, &c, 1);
-		if (readcount == 0)
+		tmp = get_next_line(fd);
+		if (!tmp)
 			break ;
-		if (readcount < 0)
-			return (-1);
-		if (c == '\n')
-			size.y++;
+		lines++;
+		free(tmp);
 	}
 	close(fd);
-	return (size.y + 1);
+	return (lines);
 }
 
 /*Function to count the number of columns in the map file*/

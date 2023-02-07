@@ -6,7 +6,7 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 20:37:41 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/01/28 22:44:26 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/02/07 18:42:10 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct s_mapdata
 	char	**map;
 	t_point	size;
 	t_point	pp;
+	t_point	np;
 	int		player;
 	int		exit;
 	int		collect;
