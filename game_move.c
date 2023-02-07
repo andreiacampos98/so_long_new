@@ -6,7 +6,7 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 20:34:03 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/02/07 19:26:25 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/02/07 21:19:29 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	count_collectables_catches(t_game *game, char move)
 		|| (move == 'a' && game->map.map[y][x - 1] == COLLECTABLE)
 		|| (move == 'd' && game->map.map[y][x + 1] == COLLECTABLE))
 		game->collect++;
+	ft_printf("Numero de coins %d", game->collect);
 }
 
 /*This funtion it will quit the game when the player found the exit 
@@ -87,19 +88,20 @@ void	move_player(t_game *game, char move)
 	if (check_next_positions(game, move, WALL) == 1)
 		return ;
 	game->map.map[game->map.pp.y][game->map.pp.x] = previous;
-	if (check_next_positions(game, move, COLLECTABLE) != 1 )
+	if (check_next_positions(game, move, COLLECTABLE) == 0 )
 		previous = game->map.map[game->map.pp.y][game->map.pp.x];
 	else
 		previous = EMPTY;
+	ft_printf("Previous %c", previous);
 	game->moves++;
 	ft_printf("Moves: %d\n", game->moves);
-	count_collectables_catches(game, move);
 	if (game->collect == game->map.collect)
 		game->map.can_exit = 1;
+	count_collectables_catches(game, move);
 	movement(game, move);
-	game->map.map[game->map.np.y][game->map.np.x] = PLAYER;
-	game->map.pp=game->map.np;
 	if (game->map.can_exit == 1
-		&& game->map.map[game->map.pp.y][game->map.pp.x] == EXIT)
+		&& game->map.map[game->map.np.y][game->map.np.x] == EXIT)
 		win_game(game);
+	game->map.map[game->map.np.y][game->map.np.x] = PLAYER;
+	game->map.pp = game->map.np;
 }
